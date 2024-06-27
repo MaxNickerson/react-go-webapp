@@ -1,4 +1,4 @@
-module github.com/MaxNickerson/react-go-webapp/backend
+module react-go-webapp/backend
 
 go 1.22.4
 

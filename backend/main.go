@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/MaxNickerson/react-go-webapp/backend/pkg/websocket"
+	"/backend/pkg/websocket"
 )
 
 // Upgrader to handle WebSocket connections
