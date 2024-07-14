@@ -1,20 +1,21 @@
-# Use the official Golang image to create a build artifact
-FROM golang:1.22.4-alpine
+FROM golang:1.22.5-alpine
 
-# Set the Current Working Directory inside the container
+# Ensure the base image is updated
+RUN apk update && apk upgrade
+
+# Create and set the working directory
+RUN mkdir /app
+ADD . /app/
 WORKDIR /app
 
-# Copy go mod and sum files
-COPY go.mod go.sum ./
-
-# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+# Download Go module dependencies
 RUN go mod download
 
-# Copy the source from the current directory to the Working Directory inside the container
-COPY . .
-
-# Build the Go app
+# Build the Go application
 RUN go build -o main .
 
-# Command to run the executable
+# Expose the application port
+EXPOSE 8080
+
+# Run the Go application
 CMD ["/app/main"]

@@ -1,18 +1,4 @@
-# Ignore node_modules
 node_modules
-
-# Ignore build output
-build
-
-# Ignore logs and temporary files
-*.log
-*.out
-*.tmp
-
-# Ignore .git directory
-.git
-
-# Ignore any IDE/editor specific files
-.vscode
-.idea
-*.swp
+Dockerfile
+docker-compose.yml
+*.md

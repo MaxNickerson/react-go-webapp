@@ -1,15 +1,4 @@
-# Ignore binary output
-main
-
-# Ignore logs and temporary files
-*.log
-*.out
-*.tmp
-
-# Ignore .git directory
-.git
-
-# Ignore any IDE/editor specific files
-.vscode
-.idea
-*.swp
+node_modules
+Dockerfile
+docker-compose.yml
+*.md

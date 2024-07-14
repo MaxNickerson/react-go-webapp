@@ -1,5 +1,5 @@
 # Stage 1: Build the react app
-FROM node:14 as builder
+FROM node:14-alpine as builder
 
 # Set the working directory
 WORKDIR /app
@@ -8,8 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install 
-# --loglvel=warn
+RUN npm install
 
 # Copy the rest of the application
 COPY . .
@@ -19,6 +18,9 @@ RUN npm run build
 
 # Stage 2: Serve the app with Nginx
 FROM nginx:alpine
+
+# Ensure the base image is updated
+RUN apk update && apk upgrade
 
 # Copy the build files from the first stage
 COPY --from=builder /app/build /usr/share/nginx/html
