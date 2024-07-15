@@ -1,0 +1,43 @@
+pipeline {
+    agent{
+        label "jenkins-agent"
+    }
+
+    environment {
+        DOCKER_BUILDKIT = 1
+    }
+
+    stages {
+
+        stage('Checkout from SCM') {
+            steps {
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/MaxNickerson/react-go-webapp'
+            }
+        }
+
+        stage('Build and Deploy') {
+            steps {
+                script {
+                    // Build and run the services using docker-compose
+                    sh 'docker-compose up --build -d'
+                }
+            }
+        }
+
+        stage('Clean Up') {
+            steps {
+                script {
+                    // Clean up unused Docker resources
+                    sh 'docker system prune -f'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Cleanup workspace
+            cleanWs()
+        }
+    }
+}
