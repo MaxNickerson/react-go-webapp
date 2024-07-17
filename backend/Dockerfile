@@ -11,6 +11,9 @@ WORKDIR /app
 # Download Go module dependencies
 RUN go mod download
 
+# Run tests
+RUN go test ./...
+
 # Build the Go application
 RUN go build -o main .
 

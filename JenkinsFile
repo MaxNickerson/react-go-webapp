@@ -24,25 +24,7 @@ pipeline {
             }
         }
 
-        stage('Test Backend') {
-            steps {
-                script {
-                    // Run Go backend tests
-                    sh 'docker-compose exec backend go test ./...'
-                }
-            }
-
-        }
-
-        stage('Test Frontend') {
-            steps {
-                script {
-                    // Run React frontend tests
-                    sh 'docker-compose exec frontend npm test'
-                }
-            }
-        }
-
+        
 
         stage('Clean Up') {
             steps {

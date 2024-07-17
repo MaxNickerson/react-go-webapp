@@ -13,6 +13,9 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
+# run tests
+RUN npm test
+
 # Build the app
 RUN npm run build
 
