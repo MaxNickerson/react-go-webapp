@@ -13,6 +13,11 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
+
+ENV CI=true
+# make sure it quits after running tests
+
+
 # run tests
 RUN npm test
 
