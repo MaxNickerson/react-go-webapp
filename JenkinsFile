@@ -15,11 +15,22 @@ pipeline {
             }
         }
 
-        stage('Build and Deploy') {
-            steps {
-                script {
-                    // Build and run the services using docker-compose
-                    sh 'docker-compose up --build -d'
+        stage('Build and Test') {
+            parallel {
+                stage('Build and Test Frontend') {
+                    steps {
+                        script {
+                            sh 'docker-compose up --build frontend --abort-on-container-exit'
+                        }
+                    }
+                }
+
+                stage('Build and Test Backend') {
+                    steps {
+                        script {
+                            sh 'docker-compose up --build backend --abort-on-container-exit'
+                        }
+                    }
                 }
             }
         }
@@ -29,7 +40,7 @@ pipeline {
         stage('Clean Up') {
             steps {
                 script {
-                    // Clean up unused Docker resources
+                    sh 'docker-compose down'
                     sh 'docker system prune -f'
                 }
             }

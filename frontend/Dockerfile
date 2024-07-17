@@ -14,7 +14,8 @@ RUN npm install
 COPY . .
 
 # run tests
-RUN npm test
+RUN npm test --watchAll=false
+
 
 # Build the app
 RUN npm run build
