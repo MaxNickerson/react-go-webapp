@@ -10,11 +10,6 @@ pipeline {
     stages {
 
 
-        stage('Cleanup Workspace and Containers') {
-            steps {
-                cleanWs()
-            }
-        }
 
         stage('Checkout from SCM') {
             steps {
@@ -22,7 +17,7 @@ pipeline {
             }
         }
 
-         stage('Build and Test FrontEnd and Backend') {
+         stage('Build Frontend and Backend') {
             steps {
                 script {
                     // Build all services and run tests
