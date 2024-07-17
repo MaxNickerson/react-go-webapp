@@ -9,17 +9,17 @@ pipeline {
 
     stages {
 
+        stage('Checkout from SCM') {
+            steps {
+                git branch: 'master', credentialsId: 'github', url: 'https://github.com/MaxNickerson/react-go-webapp'
+            }
+        }
+
         stage('CleanupWorkspace and Containers') {
             steps {
                 cleanWs()
                 sh 'docker-compose down'
-                sh 'docker system prune -f'
-            }
-        }
-
-        stage('Checkout from SCM') {
-            steps {
-                git branch: 'master', credentialsId: 'github', url: 'https://github.com/MaxNickerson/react-go-webapp'
+                sh 'docker system prune -f --volumes'
             }
         }
 
