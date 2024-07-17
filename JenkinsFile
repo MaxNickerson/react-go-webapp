@@ -15,25 +15,25 @@ pipeline {
             }
         }
 
-        stage('Build and Test') {
-            parallel {
-                stage('Build and Test Frontend') {
-                    steps {
-                        script {
-                            sh 'docker-compose up --build --abort-on-container-exit frontend'
-                        }
-                    }
-                }
-
-                stage('Build and Test Backend') {
-                    steps {
-                        script {
-                            sh 'docker-compose up --build --abort-on-container-exit backend'
-                        }
-                    }
+       
+            
+        stage('Build and Test Frontend') {
+            steps {
+                script {
+                    sh 'docker-compose up --build --abort-on-container-exit frontend'
                 }
             }
         }
+
+        stage('Build and Test Backend') {
+            steps {
+                script {
+                    sh 'docker-compose up --build --abort-on-container-exit backend'
+                }
+            }
+        }
+            
+        
 
         stage('Deploy') {
             steps {
