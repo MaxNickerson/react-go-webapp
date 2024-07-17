@@ -9,11 +9,6 @@ pipeline {
 
     stages {
 
-        stage('Checkout from SCM') {
-            steps {
-                git branch: 'master', credentialsId: 'github', url: 'https://github.com/MaxNickerson/react-go-webapp'
-            }
-        }
 
         stage('Cleanup Workspace and Containers') {
             steps {
@@ -28,15 +23,17 @@ pipeline {
             }
         }
 
+        stage('Checkout from SCM') {
+            steps {
+                git branch: 'master', credentialsId: 'github', url: 'https://github.com/MaxNickerson/react-go-webapp'
+            }
+        }
 
-
-        stage('Build and Test Frontend') {
+        stage('Build and Test FrontEnd and Backend') {
             steps {
                 script {
-                    dir('frontend') {
-                        sh 'docker-compose build frontend'
-                        sh 'docker-compose up --abort-on-container-exit frontend'
-                    }
+                    sh 'docker-compose build'
+                    sh 'docker-compose up --abort-on-container-exit'
                 }
             }
         }
