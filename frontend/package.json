@@ -5,11 +5,14 @@
   "dependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-scripts": "^5.0.1",
-    "sass": "^1.77.8"
+    "react-scripts": "latest"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "latest"
+    "@babel/plugin-proposal-private-property-in-object": "latest",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^16.0.0",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3"
   },
   "scripts": {
     "start": "react-scripts start",
