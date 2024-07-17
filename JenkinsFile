@@ -41,16 +41,20 @@ pipeline {
             }
         }
 
+        stage('Remove containers') {
+            steps {
+                script {
+                    sh 'docker-compose down -v'
+                    sh 'docker system prune -f'
+                }
+            }
+        }
+
     }
 
     post {
         always {
             cleanWs()
-        }
-        script {
-            // Clean up any containers and volumes
-            sh 'docker-compose down || true'
-            sh 'docker system prune -f --volumes || true'
         }
 
     }
