@@ -7,6 +7,10 @@ import (
 	"github.com/MaxNickerson/react-go-webapp/backend/pkg/websocket"
 )
 
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Hello, world!")
+}
+
 func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
 	fmt.Println("WebSocket Endpoint Hit")
 	conn, err := websocket.Upgrade(w, r)
@@ -34,6 +38,8 @@ func setupRoutes() {
 
 func main() {
 	fmt.Println("Distributed Chat App v0.01")
+	http.HandleFunc("/hello", helloHandler)
+
 	setupRoutes()
 	http.ListenAndServe(":8080", nil)
 }
