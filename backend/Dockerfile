@@ -11,6 +11,9 @@ WORKDIR /app
 # Download Go module dependencies
 RUN go mod download
 
+COPY . .
+
+
 # Run tests
 RUN go test ./...
 
