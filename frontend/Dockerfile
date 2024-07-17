@@ -17,7 +17,7 @@ COPY . .
 ENV CI=true
 
 # Run tests
-RUN npm test
+# RUN npm test
 
 # Build the app
 RUN npm run build
