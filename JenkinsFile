@@ -9,6 +9,12 @@ pipeline {
 
     stages {
 
+        stage('CleanupWorkspace') {
+            steps {
+                cleanWs()
+            }
+        }
+
         stage('Checkout from SCM') {
             steps {
                 git branch: 'master', credentialsId: 'github', url: 'https://github.com/MaxNickerson/react-go-webapp'
@@ -52,10 +58,4 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            // Cleanup workspace
-            cleanWs()
-        }
-    }
 }
