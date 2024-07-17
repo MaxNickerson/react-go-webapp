@@ -13,9 +13,7 @@ pipeline {
         stage('Cleanup Workspace and Containers') {
             steps {
                 cleanWs()
-                script {
-                    // Navigate to the directory containing the docker-compose.yml file
-                
+                script {                
                     sh 'docker-compose down || true'
                     sh 'docker system prune -f --volumes || true'
 
@@ -32,22 +30,12 @@ pipeline {
         stage('Build and Test FrontEnd and Backend') {
             steps {
                 script {
-                    sh 'docker-compose build'
-                    sh 'docker-compose up --abort-on-container-exit'
+                    // Build all services and run tests
+                    sh 'docker-compose up --build --abort-on-container-exit'
                 }
             }
         }
 
-
-        stage('Deploy') {
-            steps {
-                script {
-                    dir('.') {
-                        sh 'docker-compose up -d'
-                    }
-                }
-            }
-        }
     }
 
     post {
