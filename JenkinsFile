@@ -26,17 +26,7 @@ pipeline {
             steps {
                 script {
                     // Build all services and run tests
-                    sh 'docker-compose up --build --force-recreate'
-                }
-            }
-        }
-
-        stage('Check Container Health') {
-            steps {
-                script {
-                    sh 'docker ps -a'
-                    sh 'docker logs react-go-webapp_backend_1'
-                    sh 'docker logs react-go-webapp_frontend_1'
+                    sh 'docker-compose up --build'
                 }
             }
         }
