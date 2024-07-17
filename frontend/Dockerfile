@@ -1,10 +1,10 @@
-# Stage 1: Build the react app
+# Stage 1: Build and test the react app
 FROM node:14-alpine as builder
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the package.json and package-lock.json files
+# Copy the package.json and package-lock.json files first to leverage caching
 COPY package*.json ./
 
 # Install dependencies
@@ -13,14 +13,11 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
-
+# Set the CI environment variable to ensure tests exit after running
 ENV CI=true
-# make sure it quits after running tests
 
-
-# run tests
+# Run tests
 RUN npm test
-
 
 # Build the app
 RUN npm run build
