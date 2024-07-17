@@ -18,16 +18,20 @@ pipeline {
         stage('CleanupWorkspace and Containers') {
             steps {
                 cleanWs()
-                sh 'docker-compose down'
-                sh 'docker system prune -f --volumes'
+                script {
+                    dir('backend') {
+                        sh 'docker-compose down'
+                        sh 'docker system prune -f --volumes'
+                    }
+                }
             }
         }
 
-       stage('Build and Test Backend') {
+        stage('Build and Test Backend') {
             steps {
                 script {
                     dir('backend') {
-                        sh 'docker-compose up --build backend'
+                        sh 'docker-compose up --build --abort-on-container-exit backend'
                     }
                 }
             }
@@ -37,14 +41,11 @@ pipeline {
             steps {
                 script {
                     dir('frontend') {
-                        sh 'docker-compose up --build frontend'
+                        sh 'docker-compose up --build --abort-on-container-exit frontend'
                     }
                 }
             }
         }
-
-            
-        
 
         stage('Deploy') {
             steps {
