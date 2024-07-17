@@ -1,6 +1,13 @@
 
-
 services:
+  backend:
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      ports:
+        - "8080:8080"
+      networks:
+        - app-network
   frontend:
     build:
       context: ./frontend
@@ -9,18 +16,6 @@ services:
       - "3000:80"
     networks:
       - app-network
-
-
-
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    networks:
-      - app-network
-
 
 
 networks:
