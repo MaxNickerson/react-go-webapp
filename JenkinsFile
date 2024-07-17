@@ -9,9 +9,11 @@ pipeline {
 
     stages {
 
-        stage('CleanupWorkspace') {
+        stage('CleanupWorkspace and Containers') {
             steps {
                 cleanWs()
+                sh 'docker-compose down'
+                sh 'docker system prune -f'
             }
         }
 
@@ -48,15 +50,6 @@ pipeline {
             steps {
                 script {
                     sh 'docker-compose up -d'
-                }
-            }
-        }
-
-        stage('Clean Up') {
-            steps {
-                script {
-                    sh 'docker-compose down'
-                    sh 'docker system prune -f'
                 }
             }
         }
