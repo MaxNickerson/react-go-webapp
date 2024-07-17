@@ -9,6 +9,8 @@ services:
       - "3000:80"
     networks:
       - app-network
+    command: sh -c "npm install && npm test"
+
 
   backend:
     build:
@@ -18,6 +20,8 @@ services:
       - "8080:8080"
     networks:
       - app-network
+    command: sh -c "go test ./..."
+
 
 networks:
   app-network:
