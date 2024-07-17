@@ -35,7 +35,13 @@ pipeline {
             }
         }
 
-        
+        tage('Deploy') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
 
         stage('Clean Up') {
             steps {
