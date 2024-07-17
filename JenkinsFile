@@ -15,7 +15,13 @@ pipeline {
             }
         }
 
-       
+       stage('Build and Test Backend') {
+            steps {
+                script {
+                    sh 'docker-compose up --build --abort-on-container-exit backend'
+                }
+            }
+        }
             
         stage('Build and Test Frontend') {
             steps {
@@ -25,13 +31,6 @@ pipeline {
             }
         }
 
-        stage('Build and Test Backend') {
-            steps {
-                script {
-                    sh 'docker-compose up --build --abort-on-container-exit backend'
-                }
-            }
-        }
             
         
 
