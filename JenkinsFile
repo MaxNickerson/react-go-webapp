@@ -13,11 +13,6 @@ pipeline {
         stage('Cleanup Workspace and Containers') {
             steps {
                 cleanWs()
-                script {                
-                    sh 'docker-compose down || true'
-                    sh 'docker system prune -f --volumes || true'
-
-                }
             }
         }
 
@@ -27,11 +22,21 @@ pipeline {
             }
         }
 
-        stage('Build and Test FrontEnd and Backend') {
+         stage('Build and Test FrontEnd and Backend') {
             steps {
                 script {
                     // Build all services and run tests
-                    sh 'docker-compose up --build --abort-on-container-exit'
+                    sh 'docker-compose up --build'
+                }
+            }
+        }
+
+        stage('Check Container Health') {
+            steps {
+                script {
+                    sh 'docker ps -a'
+                    sh 'docker logs react-go-webapp_backend_1'
+                    sh 'docker logs react-go-webapp_frontend_1'
                 }
             }
         }
@@ -42,6 +47,12 @@ pipeline {
         always {
             cleanWs()
         }
+        script {
+            // Clean up any containers and volumes
+            sh 'docker-compose down || true'
+            sh 'docker system prune -f --volumes || true'
+        }
+
     }
 
 }
