@@ -9,6 +9,20 @@ pipeline {
 
     stages {
 
+        stage('Cleanup Workspace and Containers') {
+            steps {
+                cleanWs()
+                script {
+                    try {
+                        sh 'docker-compose down'
+                    } catch (Exception e) {
+                        echo 'No containers to stop'
+                    }
+                }
+                sh 'docker system prune -f --volumes'
+            }
+        }
+
 
 
         stage('Checkout from SCM') {
@@ -26,14 +40,7 @@ pipeline {
             }
         }
 
-        stage('Remove containers') {
-            steps {
-                script {
-                    sh 'docker-compose down -v'
-                    sh 'docker system prune -f'
-                }
-            }
-        }
+        
 
     }
 
