@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     dir('backend') {
-                        sh 'docker-compose up --build --abort-on-container-exit backend'
+                        sh 'docker-compose up --build backend'
                     }
                 }
             }
@@ -35,7 +35,7 @@ pipeline {
             steps {
                 script {
                     dir('frontend') {
-                        sh 'docker-compose up --build --abort-on-container-exit frontend'
+                        sh 'docker-compose up --build frontend'
                     }
                 }
             }
