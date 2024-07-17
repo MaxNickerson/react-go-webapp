@@ -1,13 +1,6 @@
+version: '3.8'
 
 services:
-  backend:
-      build:
-        context: ./backend
-        dockerfile: Dockerfile
-      ports:
-        - "8080:8080"
-      networks:
-        - app-network
   frontend:
     build:
       context: ./frontend
@@ -17,6 +10,14 @@ services:
     networks:
       - app-network
 
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
 
 networks:
   app-network:

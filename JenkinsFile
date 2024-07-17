@@ -20,33 +20,27 @@ pipeline {
                 cleanWs()
                 script {
                     // Navigate to the directory containing the docker-compose.yml file
-                    dir('.') {
-                        sh 'docker-compose down || true'
-                        sh 'docker system prune -f --volumes || true'
-                    }
+                
+                    sh 'docker-compose down || true'
+                    sh 'docker system prune -f --volumes || true'
+
                 }
             }
         }
 
-        stage('Build and Test Backend') {
-            steps {
-                script {
-                    dir('backend') {
-                        sh 'docker-compose up --build --abort-on-container-exit backend'
-                    }
-                }
-            }
-        }
+
 
         stage('Build and Test Frontend') {
             steps {
                 script {
                     dir('frontend') {
-                        sh 'docker-compose up --build --abort-on-container-exit frontend'
+                        sh 'docker-compose build frontend'
+                        sh 'docker-compose up --abort-on-container-exit frontend'
                     }
                 }
             }
         }
+
 
         stage('Deploy') {
             steps {
