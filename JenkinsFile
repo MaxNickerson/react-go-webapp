@@ -40,7 +40,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube-scanner-latest') {
+                withSonarQubeEnv('sonarqube-server') {
                     script {
                         sh """
                             sonar-scanner \
