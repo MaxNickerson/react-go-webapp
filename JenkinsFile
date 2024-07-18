@@ -31,11 +31,23 @@ pipeline {
             }
         }
 
-         stage('Build Frontend and Backend') {
+        stage('Build Frontend and Backend') {
             steps {
-                script {
-                    // Build all services and run tests
-                    sh 'docker-compose build'
+                sh 'docker-compose build'
+                
+            }
+        }
+
+        stage('Sonarqube Analysis') {
+            steps {
+                withSonarQubeEnv(credentialsID: 'jenkins-sonarqube-token') {
+                    script {
+                        sh 'sonar-scanner \
+                            -Dsonar.projectKey=your-project-key \
+                            -Dsonar.sources=. \
+                            -Dsonar.host.url=${env.SONAR_HOST_URL} \
+                            -Dsonar.login=${env.SONAR_AUTH_TOKEN}'
+                    }
                 }
             }
         }
