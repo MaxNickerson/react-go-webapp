@@ -47,15 +47,15 @@ pipeline {
                     withSonarQubeEnv('sonarqube-server') {
                         script {
                             echo "SonarQube Server URL: ${SONAR_HOST_URL}"
-                            echo "SonarQube Token: ${SONARQUBE_TOKEN}" // This will be masked in logs
+                            // echo "SonarQube Token: ${SONARQUBE_TOKEN}" // This will be masked in logs
                             echo "Running SonarQube Scanner..."
-                            sh """
+                            sh '''
                                 sonar-scanner \
-                                -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
+                                -Dsonar.projectKey=$SONARQUBE_PROJECT_KEY} \
                                 -Dsonar.sources=. \
-                                -Dsonar.host.url=${SONAR_HOST_URL} \
-                                -Dsonar.login=${SONARQUBE_TOKEN}
-                            """
+                                -Dsonar.host.url=$SONAR_HOST_URL \
+                                -Dsonar.login=$SONARQUBE_TOKEN
+                            '''
                         }
                     }
                 }
