@@ -5,6 +5,8 @@ pipeline {
 
     environment {
         DOCKER_BUILDKIT = 1
+        SONARQUBE_HOST = 'http://localhost:9000'
+        SONARQUBE_LOGIN = credentials('jenkins-sonarqube')
     }
 
     stages {
@@ -38,21 +40,20 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Run SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube-server') { // Ensure this matches the SonarQube server name in Jenkins Global Tool Configuration
-                    script {
-                        sh """
-                            sonar-scanner \
-                            -Dsonar.projectKey=your-project-key \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=${env.SONAR_HOST_URL} \
-                            -Dsonar.login=${env.SONAR_AUTH_TOKEN}
-                        """
-                    }
+                script {
+                    sh """
+                        sonar-scanner \
+                        -Dsonar.projectKey=your-project-key \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=${SONARQUBE_HOST} \
+                        -Dsonar.login=${SONARQUBE_LOGIN}
+                    """
                 }
             }
         }
+
 
 
         
