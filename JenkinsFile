@@ -5,7 +5,8 @@ pipeline {
 
     environment {
         DOCKER_BUILDKIT = 1
-        SONARQUBE_HOST = 'http://localhost:9000'
+        SONARQUBE_HOST = 'https://sonar.jenkinsmnickerson.com' // Update with your SonarQube server URL
+        SONARQUBE_PROJECT_KEY = 'react-go-webapp' // Update with your project key
     }
 
     stages {
@@ -41,17 +42,18 @@ pipeline {
 
         stage('Run SonarQube Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'jenkins-sonarqube', variable: 'SONARQUBE_LOGIN')]) {
+                withCredentials([string(credentialsId: 'jenkins-sonarqube', variable: 'SONARQUBE_TOKEN')]) {
                     script {
                         sh """
-                            /opt/sonar-scanner/bin/sonar-scanner \
-                            -Dsonar.projectKey=react-go-webapp \
+                            sonar-scanner \
+                            -Dsonar.projectKey=${SONARQUBE_PROJECT_KEY} \
                             -Dsonar.sources=. \
                             -Dsonar.host.url=${SONARQUBE_HOST} \
-                            -Dsonar.login=$SONARQUBE_LOGIN
+                            -Dsonar.login=${SONARQUBE_TOKEN}
                         """
                     }
                 }
+
             }
 
 
