@@ -81,7 +81,7 @@ pipeline {
                     
                 }
            }
-        }
+        
 
 
         stage('Build & Push Docker Image') {
@@ -99,7 +99,7 @@ pipeline {
             }
         }
         
-
+    }
     
 
     post {
