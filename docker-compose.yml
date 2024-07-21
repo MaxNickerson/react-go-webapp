@@ -5,8 +5,10 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    image: react-go-webapp-frontend:latest
     ports:
       - "3000:80"
+    
     networks:
       - app-network
  
@@ -15,6 +17,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    image: react-go-webapp-backend:latest
     ports:
       - "8080:8080"
     networks:
