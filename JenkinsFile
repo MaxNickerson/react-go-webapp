@@ -89,10 +89,12 @@ pipeline {
                 script {
                     docker.withRegistry('', DOCKER_PASS) {
                         sh 'docker-compose build frontend'
-                        docker.image("${IMAGE_NAME_FRONTEND}:latest").push("${IMAGE_TAG}")
+                        sh "docker tag ${IMAGE_NAME_FRONTEND}:latest ${IMAGE_NAME_FRONTEND}:${IMAGE_TAG}"
+                        docker.image("${IMAGE_NAME_FRONTEND}:${IMAGE_TAG}").push()
 
                         sh 'docker-compose build backend'
-                        docker.image("${IMAGE_NAME_BACKEND}:latest").push("${IMAGE_TAG}")
+                        sh "docker tag ${IMAGE_NAME_BACKEND}:latest ${IMAGE_NAME_BACKEND}:${IMAGE_TAG}"
+                        docker.image("${IMAGE_NAME_BACKEND}:${IMAGE_TAG}").push()
 
                     }
                 }
