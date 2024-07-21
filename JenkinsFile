@@ -5,9 +5,20 @@ pipeline {
 
     environment {
         DOCKER_BUILDKIT = 1
-        SONARQUBE_HOST = 'https://sonar.jenkinsmnickerson.com' // Update with your SonarQube server URL
-        SONARQUBE_PROJECT_KEY = 'react-go-webapp' // Update with your project key
+        SONARQUBE_HOST = 'https://sonar.jenkinsmnickerson.com' //  SonarQube server URL
+        SONARQUBE_PROJECT_KEY = 'react-go-webapp' // project key
         PATH = "/opt/sonar-scanner/bin:$PATH"
+        APP_NAME = "react-go-webapp"
+        RELEASE = "1.0.0"
+
+        DOCKER_USER = "maxnickerson"
+        DOCKER_PASS = 'dockerhub'
+        IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
+        IMAGE_TAG = "${RELEASE}-${BUILD}"
+
+        IMAGE_NAME_FRONTEND = "${DOCKER_USER}/${APP_NAME}-frontend"
+        IMAGE_NAME_BACKEND = "${DOCKER_USER}/${APP_NAME}-backend"
+
     }
 
     stages {
@@ -73,7 +84,20 @@ pipeline {
         }
 
 
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('', DOCKER_PASS) {
+                        sh 'docker-compose build frontend'
+                        docker.image("${IMAGE_NAME_FRONTEND}:latest").push("${IMAGE_TAG}")
 
+                        sh 'docker-compose build backend'
+                        docker.image("${IMAGE_NAME_BACKEND}:latest").push("${IMAGE_TAG}")
+
+                    }
+                }
+            }
+        }
         
 
     
