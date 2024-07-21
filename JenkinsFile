@@ -14,7 +14,7 @@ pipeline {
         DOCKER_USER = "maxnickerson"
         DOCKER_PASS = 'dockerhub'
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
-        IMAGE_TAG = "${RELEASE}-${BUILD}"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 
         IMAGE_NAME_FRONTEND = "${DOCKER_USER}/${APP_NAME}-frontend"
         IMAGE_NAME_BACKEND = "${DOCKER_USER}/${APP_NAME}-backend"
@@ -89,12 +89,13 @@ pipeline {
                 script {
                     docker.withRegistry('', DOCKER_PASS) {
                         sh 'docker-compose build frontend'
-                        sh "docker tag ${IMAGE_NAME_FRONTEND}:latest ${IMAGE_NAME_FRONTEND}:${IMAGE_TAG}"
-                        docker.image("${IMAGE_NAME_FRONTEND}:${IMAGE_TAG}").push()
+                        sh "docker tag ${APP_NAME}-frontend:latest ${IMAGE_NAME_FRONTEND}:${IMAGE_TAG}"
+                        sh "docker push ${IMAGE_NAME_FRONTEND}:${IMAGE_TAG}"
 
+                        // Build and tag backend image
                         sh 'docker-compose build backend'
-                        sh "docker tag ${IMAGE_NAME_BACKEND}:latest ${IMAGE_NAME_BACKEND}:${IMAGE_TAG}"
-                        docker.image("${IMAGE_NAME_BACKEND}:${IMAGE_TAG}").push()
+                        sh "docker tag ${APP_NAME}-backend:latest ${IMAGE_NAME_BACKEND}:${IMAGE_TAG}"
+                        sh "docker push ${IMAGE_NAME_BACKEND}:${IMAGE_TAG}"
 
                     }
                 }
