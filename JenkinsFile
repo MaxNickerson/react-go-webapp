@@ -12,7 +12,7 @@ pipeline {
         RELEASE = "1.0.0"
 
         DOCKER_USER = "maxnickerson"
-        DOCKER_PASS = 'dockerhub'
+        DOCKER_PASS = 'dockerhub' // secret file
         IMAGE_NAME = "${DOCKER_USER}" + "/" + "${APP_NAME}"
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
 
@@ -101,9 +101,18 @@ pipeline {
                 }
             }
         }
-        
+
+        stage('Trigger CD Pipeline') {
+            steps {
+                script {
+                    sh "curl -v -k --user admin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token'"               
+                }
+            }
+        }
+
     }
     
+
 
     post {
         always {
