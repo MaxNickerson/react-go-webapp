@@ -18,7 +18,7 @@ pipeline {
 
         IMAGE_NAME_FRONTEND = "${DOCKER_USER}/${APP_NAME}-frontend"
         IMAGE_NAME_BACKEND = "${DOCKER_USER}/${APP_NAME}-backend"
-        JENKINS_API_TOKEN = "${JENKINS_API_TOKEN}" // Jenkins API Token
+        JENKINS_API_TOKEN = credentials('JENKINS_API_TOKEN')
 
     }
 
