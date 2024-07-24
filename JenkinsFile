@@ -109,7 +109,7 @@ pipeline {
                     
                     sh """
                         echo "Triggering CD Pipeline with IMAGE_TAG=${IMAGE_TAG}"
-                        echo "Using Jenkins API Token: ${JENKINS_TOKEN}"
+                        echo "Using Jenkins API Token: ${JENKINS_API_TOKEN}"
 
                         curl -v -k --user admin:${JENKINS_API_TOKEN} \
                         -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' \
