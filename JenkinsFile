@@ -106,13 +106,13 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'USERNAME', variable: 'JENKINS_USER'), string(credentialsId: 'JENKINS_API_TOKEN', variable: 'JENKINS_API_TOKEN')]) {
                     script {
-                        def result = sh(script: """
+                        def result = sh(script: '''
                             echo "Triggering CD Pipeline with IMAGE_TAG=${IMAGE_TAG}"
-                            curl -v -k --user ${JENKINS_USER}:${JENKINS_API_TOKEN} \
-                            -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' \
-                            --data-urlencode 'IMAGE_TAG=${IMAGE_TAG}' \
-                            'https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token'
-                        """, returnStatus: true)
+                            curl -v -k --user "${JENKINS_USER}:${JENKINS_API_TOKEN}" \
+                            -X POST -H "cache-control: no-cache" -H "content-type: application/x-www-form-urlencoded" \
+                            --data-urlencode "IMAGE_TAG=${IMAGE_TAG}" \
+                            "https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token"
+                        ''', returnStatus: true)
 
                         if (result != 0) {
                             error "Failed to trigger CD pipeline"
