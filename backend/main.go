@@ -37,7 +37,7 @@ func setupRoutes() {
 }
 
 func main() {
-	fmt.Println("Distributed Chat App v0.01")
+	fmt.Println("Distributed Chat App v0.02")
 	http.HandleFunc("/hello", helloHandler)
 
 	setupRoutes()
