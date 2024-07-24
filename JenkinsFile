@@ -18,6 +18,7 @@ pipeline {
 
         IMAGE_NAME_FRONTEND = "${DOCKER_USER}/${APP_NAME}-frontend"
         IMAGE_NAME_BACKEND = "${DOCKER_USER}/${APP_NAME}-backend"
+        JENKINS_API_TOKEN = credentials('jenkins-api-token') // Jenkins API Token
 
     }
 
@@ -105,10 +106,18 @@ pipeline {
         stage('Trigger CD Pipeline') {
             steps {
                 script {
-                    sh "curl -v -k --user admin:${JENKINS_API_TOKEN} -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' --data 'IMAGE_TAG=${IMAGE_TAG}' 'https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token'"               
+                    withCredentials([string(credentialsId: 'jenkins-api-token', variable: 'JENKINS_TOKEN')]) {
+                        sh '''
+                            curl -v -k --user admin:${JENKINS_TOKEN} \
+                            -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' \
+                            --data 'IMAGE_TAG=${IMAGE_TAG}' \
+                            'https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token'
+                        '''               
+                    }
                 }
             }
         }
+
 
     }
     
