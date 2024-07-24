@@ -105,19 +105,18 @@ pipeline {
 
         stage('Trigger CD Pipeline') {
             steps {
-                withCredentials([string(credentialsId: 'jenkins-api-token', variable: 'JENKINS_API_TOKEN')]) {
-                    script {
-                        def imageTag = IMAGE_TAG
-                        sh '''
-                            echo "Triggering CD Pipeline with IMAGE_TAG=''' + imageTag + '''"
-                            echo "Using Jenkins API Token"
+                script {
+                    
+                    sh '''
+                        echo "Triggering CD Pipeline with IMAGE_TAG=${IMAGE_TAG}"
+                        echo "Using Jenkins API Token: ${JENKINS_API_TOKEN}"
 
-                            curl -v -k --user admin:${JENKINS_API_TOKEN} \
-                            -X POST -H "cache-control: no-cache" -H "content-type: application/x-www-form-urlencoded" \
-                            --data-urlencode "IMAGE_TAG=''' + imageTag + '''" \
-                            "https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token"
-                        '''                             
-                    }
+                        curl -v -k --user admin:${JENKINS_API_TOKEN} \
+                        -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' \
+                        --data 'IMAGE_TAG=${IMAGE_TAG}' \
+                        'https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token'
+                    '''            
+                    
                 }
             }
         }
