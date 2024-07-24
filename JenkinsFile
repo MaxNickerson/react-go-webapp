@@ -106,14 +106,14 @@ pipeline {
         stage('Trigger CD Pipeline') {
             steps {
                 script {
-                    withCredentials([string(credentialsId: 'jenkins-api-token', variable: 'JENKINS_TOKEN')]) {
-                        sh '''
-                            curl -v -k --user admin:${JENKINS_TOKEN} \
-                            -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' \
-                            --data 'IMAGE_TAG=${IMAGE_TAG}' \
-                            'https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token'
-                        '''               
-                    }
+                    
+                    sh '''
+                        curl -v -k --user admin:${JENKINS_TOKEN} \
+                        -X POST -H 'cache-control: no-cache' -H 'content-type: application/x-www-form-urlencoded' \
+                        --data 'IMAGE_TAG=${IMAGE_TAG}' \
+                        'https://jenkinsmnickerson.com/job/argocd-kubernetes-manifests/buildWithParameters?token=gitops-token'
+                    '''               
+                    
                 }
             }
         }
