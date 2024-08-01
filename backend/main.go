@@ -12,7 +12,7 @@ func helloHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
-	fmt.Println("WebSocket Endpoint Hit")
+	fmt.Println("WebSocket Endpoint Success")
 	conn, err := websocket.Upgrade(w, r)
 	if err != nil {
 		fmt.Fprintf(w, "%+v\n", err)
