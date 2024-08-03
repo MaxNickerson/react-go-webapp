@@ -8,7 +8,7 @@ import (
 )
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello!")
+	fmt.Fprintln(w, "Hi!")
 }
 
 func serveWs(pool *websocket.Pool, w http.ResponseWriter, r *http.Request) {
