@@ -1,7 +1,3 @@
-Here's a draft of the README file for your CI/CD pipeline setup:
-
----
-
 # Full Stack Web Application CI/CD Pipeline
 
 This project sets up a Continuous Integration and Continuous Deployment (CI/CD) pipeline for a full stack web application built with React (frontend) and Go (backend), deployed on Kubernetes clusters across multiple Amazon EC2 virtual machines. The pipeline is powered by Jenkins, Argo CD, and additional tools such as SonarQube for static code analysis and Docker for containerization.
