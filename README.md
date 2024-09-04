@@ -10,7 +10,7 @@ This project sets up a Continuous Integration and Continuous Deployment (CI/CD) 
 
 - [Technologies Used](#technologies-used)
 - [Pipeline Overview](#pipeline-overview)
-- 
+  
 ## Technologies Used
 
 - **Frontend**: React.js
