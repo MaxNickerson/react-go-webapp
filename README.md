@@ -38,7 +38,7 @@ The CI/CD pipeline is designed to automate the build, testing, and deployment pr
    - **Docker** is used to containerize both the frontend (React) and backend (Go) services.
    - The pipeline uses **Jenkins** to push Docker images to a container registry.
    - **Argo CD** is responsible for continuous deployment, ensuring the updated images are deployed to Kubernetes clusters.
-   - The web application is deployed on Kubernetes clusters distributed across 4 Amazon EC2 instances.
+   - The web application is deployed on Kubernetes clusters distributed across 2 Amazon EC2 instances.
 
 3. **Automated Workflow**:
    - The pipeline is designed to trigger remotely for seamless updates. Whenever changes are committed to the repository, Jenkins automatically triggers a new build, performs static analysis with SonarQube, and deploys the updated application using Argo CD.
